@@ -4,6 +4,12 @@ A universal, stack-agnostic template designed to eliminate "vibe coding" and enf
 
 This architecture treats the **File System as an API**, enabling a seamless cross-agent workflow where you can start a task with a fast model (e.g., Gemini Flash) and hand it off to a heavy-reasoning model (e.g., DeepSeek) without losing context.
 
+### 🧠 Universal Autonomous Autopilot & Guidelines
+This template includes an embedded `ai-workflow-guidelines.md` core file alongside universal compatibility bridge files (`.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`, `AGENTS.md`, and `AI_INSTRUCTIONS.md`) to guarantee that any IDE or CLI harness seamlessly adopts the deterministic File System API workflow.
+
+* **CLI Agents (Claude Code, Antigravity, Aider, OpenCode):** Automatically locate and route via `AGENTS.md` and `AI_INSTRUCTIONS.md` to load the workflow guidelines before executing tasks.
+* **IDE Agents (Cursor, Windsurf, VS Code / GitHub Copilot):** Automatically adapt to the deterministic File System API workflow via their native integration files (`.cursorrules`, `.windsurfrules`, and `.github/copilot-instructions.md`).
+
 ## ⚡ Core Philosophy
 
 - **Zero Hallucination Context:** The AI relies entirely on local `.md` files for state and architecture, not on its transient chat history.
