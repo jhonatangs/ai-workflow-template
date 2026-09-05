@@ -94,69 +94,69 @@ Depending on the tool, you may also need to configure authentication, model acce
 
 Use the text files in `.ai/prompts/` as inputs for your terminal AI agents.
    
-   ### 1. Scaffolding
-   
-   Start the project using a compatible harness:
-   
-   ```bash
-   cat .ai/prompts/1-start.txt | antigravity
-   ```
-   
-   The agent should read `.ai/context.md` and `.ai/todo.md` before making changes.
-   
-   ### 2. Cross-Agent Handoff: Check-out
-   
-   If the current model gets stuck or the task requires deeper reasoning, pause the current operation:
-   
-   ```bash
-   cat .ai/prompts/4-pause.txt | antigravity
-   ```
-   
-   The pause workflow should update `.ai/handoff_state.md` with information such as:
-   
-   - Current task and progress
-   - Decisions already made
-   - Files changed
-   - Known errors or blockers
-   - Recommended next steps
-   - Commands that should be executed next
-   
-   ### 3. Cross-Agent Handoff: Check-in
-   
-   Resume the task with a different agent or model:
-   
-   ```bash
-   opencode --model deepseek-v4 --prompt-file .ai/prompts/5-resume.txt
-   ```
-   
-   The resume workflow should read `.ai/handoff_state.md`, `.ai/context.md`, and `.ai/todo.md` before continuing.
-   
-   > Model names and command-line options vary between tools and providers. Replace `deepseek-v4` and other example values with identifiers supported by your installed harness.
-   
-   ### 4. Fix
-   
-   After manual review or when a specific issue is identified, use the fix prompt:
-   
-   ```bash
-   cat .ai/prompts/2-fix.txt | antigravity
-   ```
-   
-   ### 5. Ship
-   
-   Once the changes have been reviewed and approved, let the agent validate the work and prepare a commit:
-   
-   ```bash
-   cat .ai/prompts/3-ship.txt | antigravity
-   ```
-   
-   The ship workflow is intended to:
-   
-   - Validate the current changes
-   - Run the relevant checks and tests
-   - Generate a Conventional Commit message
-   - Prepare a pull request when supported by the harness
-   
-   Always review generated commits and pull requests before pushing or merging them.
+### 1. Scaffolding
+
+Start the project using a compatible harness:
+
+```bash
+cat .ai/prompts/1-start.txt | antigravity
+```
+
+The agent should read `.ai/context.md` and `.ai/todo.md` before making changes.
+
+### 2. Cross-Agent Handoff: Check-out
+
+If the current model gets stuck or the task requires deeper reasoning, pause the current operation:
+
+```bash
+cat .ai/prompts/4-pause.txt | antigravity
+```
+
+The pause workflow should update `.ai/handoff_state.md` with information such as:
+
+- Current task and progress
+- Decisions already made
+- Files changed
+- Known errors or blockers
+- Recommended next steps
+- Commands that should be executed next
+
+### 3. Cross-Agent Handoff: Check-in
+
+Resume the task with a different agent or model:
+
+```bash
+opencode --model deepseek-v4 --prompt-file .ai/prompts/5-resume.txt
+```
+
+The resume workflow should read `.ai/handoff_state.md`, `.ai/context.md`, and `.ai/todo.md` before continuing.
+
+> Model names and command-line options vary between tools and providers. Replace `deepseek-v4` and other example values with identifiers supported by your installed harness.
+
+### 4. Fix
+
+After manual review or when a specific issue is identified, use the fix prompt:
+
+```bash
+cat .ai/prompts/2-fix.txt | antigravity
+```
+
+### 5. Ship
+
+Once the changes have been reviewed and approved, let the agent validate the work and prepare a commit:
+
+```bash
+cat .ai/prompts/3-ship.txt | antigravity
+```
+
+The ship workflow is intended to:
+
+- Validate the current changes
+- Run the relevant checks and tests
+- Generate a Conventional Commit message
+- Prepare a pull request when supported by the harness
+
+Always review generated commits and pull requests before pushing or merging them.
 
 ## 🛠️ Customizing Rules
 
