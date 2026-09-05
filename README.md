@@ -66,3 +66,11 @@ Use the text files in `.ai/prompts/` as inputs for your terminal AI agents.
 ## 🛠️ Customizing Rules
 
 The rules in `.ai/rules/` are designed to be stack-agnostic, focusing on Software Engineering and Data Engineering best practices. If your team requires specific linters or architectural patterns not covered, simply update the markdown files. The agents will adapt immediately on the next prompt execution.
+
+## ⚙️ Terminal Integration
+
+To execute orchestration prompts in the terminal without manually piping files (e.g., `cat .ai/prompts/1-start.txt | antigravity`), install the official Zsh router plugin:
+
+🔗 **[Zsh AI Workflow Plugin](https://github.com/jhonatangs/zsh-ai-workflow)**
+
+This plugin provides strict, parameterized commands (`ais`, `aipause`, `airesume`) to route tasks to your preferred harness and model seamlessly.
