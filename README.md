@@ -74,3 +74,7 @@ To execute orchestration prompts in the terminal without manually piping files (
 🔗 **[Zsh AI Workflow Plugin](https://github.com/jhonatangs/zsh-ai-workflow)**
 
 This plugin provides strict, parameterized commands (`ais`, `aipause`, `airesume`) to route tasks to your preferred harness and model seamlessly.
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
