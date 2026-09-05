@@ -1,0 +1,5 @@
+You are taking over an in-progress task from another AI agent.
+1. Read `.ai/todo.md` and `.ai/context.md` to understand the broad goal and architecture.
+2. Read `.ai/handoff_state.md` meticulously. It contains the exact point where the previous agent stopped, the files they modified, and the pending issues.
+3. Read the relevant stack rules in `.ai/rules/`.
+4. Resume the implementation exactly from the 'Next Steps required' section in the handoff file. Fix any pending errors and complete the task following standard protocols.

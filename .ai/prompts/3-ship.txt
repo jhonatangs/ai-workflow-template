@@ -1,0 +1,6 @@
+The manual review is approved. Proceed with the wrap-up:
+1. Mark the current task as [x] in `.ai/todo.md`.
+2. Check `git status` and analyze the `git diff`.
+3. Generate a commit message strictly following Conventional Commits based on the actual changes.
+4. Push to the current branch.
+5. If applicable, use the GitHub CLI (gh) to open a detailed Pull Request, populating the description based on the `.ai/handoff_state.md`.

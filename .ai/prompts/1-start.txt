@@ -1,0 +1,6 @@
+Start the next task marked as [ ] in the `.ai/todo.md` file. 
+1. Read `.ai/context.md` to understand the project architecture.
+2. Identify the stack involved in the task and load the relevant rules from `.ai/rules/`.
+3. Write the necessary code and unit tests.
+4. Run the linters (e.g., Ruff, ESLint, SQLFluff, mypy) and ensure they pass autonomously. Iterate on errors without asking for help.
+5. Once everything passes, document the changes in `.ai/handoff_state.md`, pause execution, and wait for my manual review in the code editor.

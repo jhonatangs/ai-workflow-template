@@ -1,0 +1,1 @@
+Analyze the feedback I left in the code comments marked with 'TODO: AI', or fix the linter/typing error that just occurred in the console. Strictly adhere to the guidelines in the `.ai/rules/` directory while refactoring.
