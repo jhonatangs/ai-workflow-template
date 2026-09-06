@@ -6,7 +6,7 @@ To establish the project state, immediately read:
 2. `.ai/todo.md` (for the active checklist)
 3. Relevant guidelines in `.ai/rules/` matching the required tech stack.
 
-After fully loading this context, execute the following task:
+After fully loading this context, execute the following task strictly following the rules above:
 
 {{USER_PROMPT}}
 

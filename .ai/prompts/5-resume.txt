@@ -4,8 +4,9 @@ You are taking over an ongoing project mid-development. Before taking any action
 To synchronize your context, you must read:
 1. `.ai/context.md`
 2. `.ai/todo.md`
+3. `.ai/rules/` (to re-align with the project's quality gates and architectural standards)
 
-Once synchronized, execute the following task:
+Once synchronized, execute the following task strictly following the rules above:
 
 {{USER_PROMPT}}
 

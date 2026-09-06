@@ -23,12 +23,14 @@ Every project contains an `.ai/` directory initialized from the `ai-workflow-tem
 1. **Context First:** Before writing any code, always read `.ai/context.md` and `.ai/todo.md` if available.
 2. **File System as API:** Do not output long snippets of code in the chat if you have tools to write directly to the file system. Apply the changes autonomously.
 3. **State Management:** If you are completing a task, you MUST update `.ai/todo.md` to reflect the progress. If you are pausing or handing off to another agent, you MUST update `.ai/context.md` with the latest architectural decisions.
-4. **Strict Compliance:** Adhere to the specific rules defined in the `.ai/rules/` directory based on the stack we are currently using.
+4. **Task Mutation Strict Syntax:** When updating `.ai/todo.md`, you MUST preserve the exact Markdown checklist format. 
+   - Pending task: `- [ ] Task description`
+   - Completed task: `- [x] Task description`
+   - NEVER delete completed tasks, NEVER alter the numbering, and NEVER use custom tags like `[Done]` or `[Finished]`.
+5. **Strict Compliance:** Adhere to the specific rules defined in the `.ai/rules/` directory based on the stack we are currently using.
 
 ## 5. Initialization Behavior
-
 When entering a repository using this workflow:
-
 1. Read `.ai/ai-workflow-guidelines.md`.
 2. Read `.ai/context.md`.
 3. Read `.ai/todo.md`.
