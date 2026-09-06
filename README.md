@@ -40,6 +40,39 @@ The brain of the system lives in the `.ai/` directory:
     └── 5-resume.txt    # Trigger context load (Check-in)
 ```
 
+### AI Agent Integration Files
+
+The template includes lightweight instruction entry points for different AI development environments:
+
+- `.cursorrules` — Cursor
+- `.windsurfrules` — Windsurf
+- `AGENTS.md` — agent-oriented coding tools
+- `AI_INSTRUCTIONS.md` — generic AI instruction entry point
+- `.github/copilot-instructions.md` — GitHub Copilot
+
+These files intentionally contain only the minimum instructions required to bootstrap the workflow. The canonical workflow rules are defined in:
+
+```text
+.ai/ai-workflow-guidelines.md
+```
+
+This design avoids duplicating the same workflow instructions across different AI tools and keeps the project behavior consistent.
+
+When using the `zsh-ai-workflow` plugin, these integration files can be installed selectively with `ai-init`:
+
+```bash
+ai-init
+ai-init --agent cursor
+ai-init --agent windsurf
+ai-init --agent agents
+ai-init --agent generic
+ai-init --agent copilot
+ai-init --agent cursor --agent copilot
+ai-init --all
+```
+
+The `.ai/` directory remains the canonical workflow layer regardless of which AI integration files are installed.
+
 ### File responsibilities
 
 | File or directory | Responsibility |
