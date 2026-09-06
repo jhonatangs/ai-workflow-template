@@ -1,6 +1,13 @@
-The manual review is approved. Proceed with the wrap-up:
-1. Mark the current task as [x] in `.ai/todo.md`.
-2. Check `git status` and analyze the `git diff`.
-3. Generate a commit message strictly following Conventional Commits based on the actual changes.
-4. Push to the current branch.
-5. If applicable, use the GitHub CLI (gh) to open a detailed Pull Request, populating the description based on the `.ai/handoff_state.md`.
+[SYSTEM INSTRUCTION: SHIP & COMMIT PREPARATION]
+You are preparing the current workspace for a commit or Pull Request. Read `.ai/rules/01-global.md` to review our Conventional Commits standard.
+
+Follow these execution steps strictly:
+1. Review all unstaged and staged changes in the repository to understand what was modified.
+2. Run formatting, type-checking, or linting tools if available in the current project stack.
+3. Formulate a precise Conventional Commit message summarizing the changes.
+4. Update `.ai/todo.md` to mark the related task(s) as complete, if not already done.
+
+Additional user instruction (if any):
+{{USER_PROMPT}}
+
+CRITICAL REQUIREMENT: Do not make structural architectural changes during this phase. Focus solely on code quality, review, and commit preparation.

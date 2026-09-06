@@ -1,5 +1,15 @@
-Pause execution immediately. Do not write any more code.
-1. Document everything you have done so far for the current task in `.ai/handoff_state.md`.
-2. Set the Status to 'Paused' or 'Blocked'.
-3. Explicitly write down the current error, failing test, or the exact next step required in the 'Current State' and 'Next Steps' sections of the handoff file.
-4. Stop processing. Another agent will take over.
+[SYSTEM INSTRUCTION: WORKFLOW PAUSE & STATE DUMP]
+We are pausing the current development session. You must save your exact state so another agent can resume later without losing context.
+
+Follow these execution steps strictly:
+1. Identify the current active task in `.ai/todo.md`.
+2. Analyze any pending REPL loop errors, broken code, or partially implemented logic in the workspace.
+3. Write a detailed status report directly into `.ai/handoff_state.md`. This file MUST include:
+   - The current architectural goal.
+   - The exact files you were modifying.
+   - The exact next step the resuming agent must take.
+
+Additional user instruction (if any):
+{{USER_PROMPT}}
+
+CRITICAL REQUIREMENT: Write the state dump exclusively to `.ai/handoff_state.md`. Do not summarize the dump in the chat response.
