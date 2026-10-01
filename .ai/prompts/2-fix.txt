@@ -3,13 +3,15 @@ You are stepping in to fix an error, bug, or failed test. Before acting, you MUS
 
 To ensure your fix aligns with the architecture, read:
 1. `.ai/context.md`
-2. `.ai/rules/`
+2. `.ai/handoff_state.md` (to see what the previous execution was doing and what failed)
+3. The relevant stack rule in `.ai/rules/`
 
-ERROR DISCOVERY LOGIC:
-- Option A (Console Input): Analyze the specific error trace or instruction provided in the instruction block below.
-- Option B (File System): If the instruction block below is a generic autopilot command, read `.ai/todo.md` to identify the documented bug or failing test.
+ERROR DISCOVERY & RESOLUTION LOGIC:
+- Option A (Console/Chat Input): Analyze the specific error trace or instruction provided below.
+- Option B (File System): If the instruction block below is empty, read `.ai/handoff_state.md` and `.ai/todo.md` or run `make check` to identify the failing test or linter.
+- Apply the fix and run `make check` until all validations pass.
 
 Instruction:
 {{USER_PROMPT}}
 
-CRITICAL REQUIREMENT: Use your tools to apply the fix directly to the file system. Do not output long code snippets in the chat. Update `.ai/todo.md` when the issue is fully resolved.
+CRITICAL REQUIREMENT: Apply the fix directly to the file system. Do not output long code snippets in the chat. Update `.ai/todo.md` (if resolved) and ALWAYS update `.ai/handoff_state.md` with the root cause, fix applied, and current validation status before ending your turn.

@@ -1,43 +1,47 @@
 # 🤖 AI-Assisted Development Template
 
-A universal, stack-agnostic template designed to eliminate "vibe coding" and enforce deterministic, high-quality output from autonomous AI agents (like Google Antigravity, OpenCode, Cursor, and other compatible tools.). 
+A universal, stack-agnostic template designed to eliminate "vibe coding" and enforce deterministic, high-quality output from autonomous AI agents (like Google Antigravity, OpenCode, Cursor, Claude Code, and other compatible tools).
 
-This architecture treats the **File System as an API**, enabling a seamless cross-agent workflow where you can start a task with a fast model (e.g., Gemini Flash) and hand it off to a heavy-reasoning model (e.g., DeepSeek) without losing context.
+This architecture treats the **File System as an API** paired with standardized **`Makefile` quality gates**, enabling a seamless cross-agent workflow where you can start a task with a fast model (e.g., Gemini Flash) and hand it off to a heavy-reasoning model (e.g., Gemini Pro, DeepSeek) at any moment without losing context.
 
 ### 🧠 Universal Autonomous Autopilot & Guidelines
 This template includes an embedded `ai-workflow-guidelines.md` core file alongside universal compatibility bridge files (`.cursorrules`, `.windsurfrules`, `.github/copilot-instructions.md`, `AGENTS.md`, and `AI_INSTRUCTIONS.md`) to guarantee that any IDE or CLI harness seamlessly adopts the deterministic File System API workflow.
 
 * **CLI Agents (Claude Code, Antigravity, Aider, OpenCode):** Automatically locate and route via `AGENTS.md` and `AI_INSTRUCTIONS.md` to load the workflow guidelines before executing tasks.
-* **IDE Agents (Cursor, Windsurf, VS Code / GitHub Copilot):** Automatically adapt to the deterministic File System API workflow via their native integration files (`.cursorrules`, `.windsurfrules`, and `.github/copilot-instructions.md`).
+* **IDE Agents (Antigravity GUI, Cursor, Windsurf, VS Code / GitHub Copilot):** Automatically adapt to the deterministic File System API workflow via their native integration files (`AGENTS.md`, `.cursorrules`, `.windsurfrules`, and `.github/copilot-instructions.md`).
 
 ## ⚡ Core Philosophy
 
-- **Zero Hallucination Context:** The AI relies entirely on local `.md` files for state and architecture, not on its transient chat history.
-- **Strict Quality Gates:** Engineering rules (SRP, idempotency, strict typing) are decoupled from prompts and injected dynamically based on the task.
-- **Cross-Agent Handoff:** Agents dump their current state, errors, and next steps into a buffer file (`handoff_state.md`), allowing any other agent (or human) to pick up exactly where they left off.
-- **Stack Agnostic:** The template can be adapted to frontend, backend, data engineering, automation, infrastructure, and other software projects.
+- **Zero Hallucination Context:** The AI relies entirely on local `.md` files (and active MCP servers) for state and architecture, not on transient chat history.
+- **Continuous Cross-Agent Handoff:** Agents update the transition buffer (`.ai/handoff_state.md`) at the end of **every command execution** (`start`, `fix`, `ship`, `pause`, `resume`), allowing any other agent, model, or human to pick up immediately with zero state loss—even after unexpected session drops.
+- **Deterministic Quality Gates (`Makefile` + Rules):** Engineering rules (SRP, idempotency, strict typing) live in `.ai/rules/`, while execution checks (`lint`, `typecheck`, `test`) are standardized via `make check` before any task is marked complete.
+- **Branch Safety & PR Workflow:** Agents never commit directly to `main`. Every task runs inside a semantic feature branch and ships via Pull Request (`gh pr create`).
+- **Stack Agnostic:** The template adapts cleanly to data engineering, backend, frontend, infrastructure (IaC), and AI/agentic projects.
 
-## 📂 Architecture overview
+## 📂 Architecture Overview
 
-The brain of the system lives in the `.ai/` directory:
+The brain of the system lives in the `.ai/` directory alongside a root `Makefile`:
 
 ```text
-.ai/
-├── todo.md             # Short-term memory (Sprint tasks & status)
-├── context.md          # Long-term memory (Global architecture & active stack)
-├── handoff_state.md    # The relay baton (Cross-agent transition buffer - gitignored)
-├── rules/              # Quality Gates (Injected on demand)
-│   ├── 01-global.md
-│   ├── 02-python.md
-│   ├── 03-data.md
-│   ├── 04-ai-ops.md
-│   └── 05-frontend.md
-└── prompts/            # Terminal orchestration triggers
-    ├── 1-start.txt     # Trigger autonomous scaffolding
-    ├── 2-fix.txt       # Trigger bug fixes based on human review
-    ├── 3-ship.txt      # Trigger conventional commits and PRs
-    ├── 4-pause.txt     # Trigger context dump (Check-out)
-    └── 5-resume.txt    # Trigger context load (Check-in)
+.
+├── Makefile                    # Standardized quality gates (make setup, make check, make test)
+└── .ai/
+    ├── ai-workflow-guidelines.md # Canonical workflow rules and initialization protocol
+    ├── todo.md                 # Short-term memory (Atomic sprint tasks & status)
+    ├── context.md              # Long-term memory (Global architecture, ADRs & active stack)
+    ├── handoff_state.md        # Continuous relay baton (Updated after every command - gitignored)
+    ├── rules/                  # Modular Quality Gates (Injected on demand by stack)
+    │   ├── 01-global.md
+    │   ├── 02-python.md
+    │   ├── 03-data.md
+    │   ├── 04-ai-ops.md
+    │   └── 05-frontend.md
+    └── prompts/                # Orchestration triggers (CLI & IDE Chat)
+        ├── 1-start.txt         # Create feature branch, execute task, validate & update state
+        ├── 2-fix.txt           # Diagnose bug/trace, apply fix, validate & update state
+        ├── 3-ship.txt          # Run make check, commit, push branch & open Pull Request
+        ├── 4-pause.txt         # Explicit mid-task context dump (Check-out)
+        └── 5-resume.txt        # Reload state from handoff_state.md (Check-in)
 ```
 
 ### AI Agent Integration Files
@@ -46,8 +50,8 @@ The template includes lightweight instruction entry points for different AI deve
 
 - `.cursorrules` — Cursor
 - `.windsurfrules` — Windsurf
-- `AGENTS.md` — agent-oriented coding tools
-- `AI_INSTRUCTIONS.md` — generic AI instruction entry point
+- `AGENTS.md` — Agent-oriented coding tools (Antigravity, OpenCode, Claude Code)
+- `AI_INSTRUCTIONS.md` — Generic AI instruction entry point
 - `.github/copilot-instructions.md` — GitHub Copilot
 
 These files intentionally contain only the minimum instructions required to bootstrap the workflow. The canonical workflow rules are defined in:
@@ -55,8 +59,6 @@ These files intentionally contain only the minimum instructions required to boot
 ```text
 .ai/ai-workflow-guidelines.md
 ```
-
-This design avoids duplicating the same workflow instructions across different AI tools and keeps the project behavior consistent.
 
 When using the `zsh-ai-workflow` plugin, these integration files can be installed selectively with `ai-init`:
 
@@ -71,19 +73,16 @@ ai-init --agent cursor --agent copilot
 ai-init --all
 ```
 
-The `.ai/` directory remains the canonical workflow layer regardless of which AI integration files are installed.
-
-### File responsibilities
+### File Responsibilities
 
 | File or directory | Responsibility |
 |---|---|
-| `.ai/todo.md` | Defines the current tasks, priorities, and progress |
+| `Makefile` | Standardizes validation commands (`make check`, `make lint`, `make test`) across humans and agents |
+| `.ai/todo.md` | Defines the current atomic tasks, priorities, and progress (`- [ ]` and `- [x]`) |
 | `.ai/context.md` | Describes the project stack, architecture, conventions, and constraints |
-| `.ai/handoff_state.md` | Stores the current agent state, known errors, decisions, and next steps |
-| `.ai/rules/` | Contains reusable quality and engineering rules |
-| `.ai/prompts/` | Contains prompts used to start, fix, pause, resume, and ship work |
-
-The `handoff_state.md` file is normally generated or updated during the pause workflow. It should generally remain untracked because it represents temporary working state.
+| `.ai/handoff_state.md` | Continuously stores active branch, modified files, validation status, errors, and next steps after **every** command |
+| `.ai/rules/` | Contains reusable quality and engineering rules loaded on demand |
+| `.ai/prompts/` | Contains physical prompts used to start, fix, pause, resume, and ship work |
 
 ## 🚀 Getting Started
 
@@ -91,7 +90,7 @@ The `handoff_state.md` file is normally generated or updated during the pause wo
 
 Open the repository on GitHub and select **Use this template**:
 
-<https://github.com/jhonatangs/ai-workflow-template>
+[https://github.com/jhonatangs/ai-workflow-template](https://github.com/jhonatangs/ai-workflow-template)
 
 Alternatively, clone it directly:
 
@@ -102,19 +101,11 @@ cd ai-workflow-template
 
 ### 2. Define the project context
 
-Edit `.ai/context.md` and describe the specific stack, architecture, conventions, and constraints of your project.
-
-For example:
-
-- Vue.js + FastAPI
-- React + Node.js
-- dbt + DuckDB + Airflow
-- Python + PostgreSQL
-- Terraform + Kubernetes
+Edit `.ai/context.md` and describe the specific stack, architecture, conventions, and constraints of your project (e.g., `Snowflake + dbt + Airflow + Terraform`, `Vue.js + FastAPI`, `Python + PostgreSQL`).
 
 ### 3. Plan the work
 
-Add the immediate goals to `.ai/todo.md` using unchecked task items:
+Add the immediate sprint goals to `.ai/todo.md` using unchecked task items:
 
 ```markdown
 - [ ] Define the initial project structure
@@ -123,128 +114,91 @@ Add the immediate goals to `.ai/todo.md` using unchecked task items:
 - [ ] Add automated tests
 ```
 
-### 4. Ensure your AI harness is installed
+## 🔄 The Tactical Loop (IDE Chat & Terminal CLI)
 
-The commands in this README are examples for compatible terminal AI tools. Install and configure the harness you intend to use before executing them.
+You can trigger the workflow either directly from your **IDE Agent Chat Panel** ( referencing the physical prompt files) or from the **Terminal CLI**.
 
-Depending on the tool, you may also need to configure authentication, model access, or a default project profile.
+### Option A: Operating via IDE Chat Panel (Antigravity / OpenCode / Cursor)
 
-## 🔄 The Tactical Loop
+Instead of typing unstructured prompts in the IDE chat, reference the physical files in `.ai/prompts/`:
 
-Use the text files in `.ai/prompts/` as inputs for your terminal AI agents.
-   
-### 1. Scaffolding
+- **Start Task:** `Execute instructions in .ai/prompts/1-start.txt`
+- **Fix Error:** `Execute instructions in .ai/prompts/2-fix.txt with error: <paste error or trace>`
+- **Ship (Commit & PR):** `Execute instructions in .ai/prompts/3-ship.txt`
+- **Pause Session:** `Execute instructions in .ai/prompts/4-pause.txt`
+- **Resume Session:** `Execute instructions in .ai/prompts/5-resume.txt`
 
-Start the project using a compatible harness:
+### Option B: Operating via Terminal CLI
 
+#### 1. Start / Scaffolding (`1-start.txt`)
 ```bash
 cat .ai/prompts/1-start.txt | antigravity
 ```
+The agent reads `.ai/context.md`, `.ai/todo.md`, and `.ai/handoff_state.md`, ensures a semantic feature branch is active, implements the task, validates via `make check`, marks `- [x]` in `.ai/todo.md`, and updates `.ai/handoff_state.md`.
 
-The agent should read `.ai/context.md` and `.ai/todo.md` before making changes.
-
-### 2. Cross-Agent Handoff: Check-out
-
-If the current model gets stuck or the task requires deeper reasoning, pause the current operation:
-
+#### 2. Cross-Agent Handoff: Check-out (`4-pause.txt`)
+If you need to stop mid-task or switch to a deeper reasoning model:
 ```bash
 cat .ai/prompts/4-pause.txt | antigravity
 ```
+Updates `.ai/handoff_state.md` with current branch, modified files, blockers, and exact next steps. *(Note: `handoff_state.md` is also automatically updated at the end of `1-start`, `2-fix`, `3-ship`, and `5-resume`).*
 
-The pause workflow should update `.ai/handoff_state.md` with information such as:
-
-- Current task and progress
-- Decisions already made
-- Files changed
-- Known errors or blockers
-- Recommended next steps
-- Commands that should be executed next
-
-### 3. Cross-Agent Handoff: Check-in
-
-Resume the task with a different agent or model:
-
+#### 3. Cross-Agent Handoff: Check-in (`5-resume.txt`)
+Resume the task seamlessly with a different agent or model:
 ```bash
 opencode --model deepseek-v4 --prompt-file .ai/prompts/5-resume.txt
 ```
+The resuming agent reads `.ai/handoff_state.md` first, synchronizes with `.ai/context.md` and `.ai/todo.md`, and continues execution.
 
-The resume workflow should read `.ai/handoff_state.md`, `.ai/context.md`, and `.ai/todo.md` before continuing.
-
-> Model names and command-line options vary between tools and providers. Replace `deepseek-v4` and other example values with identifiers supported by your installed harness.
-
-### 4. Fix
-
-After manual review or when a specific issue is identified, use the fix prompt:
-
+#### 4. Fix (`2-fix.txt`)
+When a test fails or an issue is identified during review:
 ```bash
 cat .ai/prompts/2-fix.txt | antigravity
 ```
 
-### 5. Ship
-
-Once the changes have been reviewed and approved, let the agent validate the work and prepare a commit:
-
+#### 5. Ship & Pull Request (`3-ship.txt`)
+Once changes are ready to be delivered:
 ```bash
 cat .ai/prompts/3-ship.txt | antigravity
 ```
+The ship workflow verifies branch safety (never pushing directly to `main`), runs `make check`, creates a Conventional Commit, pushes the feature branch, opens a Pull Request (`gh pr create --fill`), and logs the PR state in `.ai/handoff_state.md`.
 
-The ship workflow is intended to:
+## 🛠️ Customizing Granular Rules
 
-- Validate the current changes
-- Run the relevant checks and tests
-- Generate a Conventional Commit message
-- Prepare a pull request when supported by the harness
-
-Always review generated commits and pull requests before pushing or merging them.
-
-## 🛠️ Customizing Rules
-
-The rules in `.ai/rules/` are designed to be broadly reusable and focus on Software Engineering and Data Engineering best practices.
-
-If your team requires specific linters, frameworks, architectural patterns, security requirements, or deployment conventions, update or add rule files.
-
-Examples:
+The rules in `.ai/rules/` are modular and loaded on demand so agents only consume tokens relevant to the active layer. You can split or expand them for specialized stacks, for example:
 
 ```text
 .ai/rules/
-├── 01-global.md
-├── 02-python.md
-├── 03-data.md
-├── 04-ai-ops.md
-├── 05-frontend.md
-├── 06-security.md
-└── 07-testing.md
+├── 01-global-git.md
+├── 02-python-ingestion.md
+├── 03-terraform-aws-finops.md
+├── 04-snowflake-governance-lgpd.md
+├── 05-dbt-quality-observability.md
+├── 06-airflow-cosmos.md
+└── 07-cortex-semantic-ai.md
 ```
 
-The agents will use the updated rules on the next prompt execution.
-
-## ⚙️ Terminal Integration
+## ⚙️ Terminal Integration (Zsh Router Plugin)
 
 To execute orchestration prompts without manually piping files, install the official Zsh router plugin:
 
 **[Zsh AI Workflow Plugin](https://github.com/jhonatangs/zsh-ai-workflow)**
 
-The plugin provides strict, parameterized commands such as:
-
 ```bash
-ais <harness> <model>
-aif <harness> <model>
+ais <harness> <model> ["optional instruction"]
+aif <harness> <model> ["optional error trace"]
 aipause <harness> <model>
 airesume <harness> <model>
 aipr <harness> <model>
 ```
 
-These commands route tasks to the selected AI harness and model.
+## 🔐 Recommended Git Configuration
 
-## 🔐 Recommended Git configuration
-
-Because `handoff_state.md` contains temporary working state, consider adding it to `.gitignore`:
+Because `handoff_state.md` contains volatile session state, keep it in `.gitignore`:
 
 ```gitignore
 .ai/handoff_state.md
 ```
-
-You may choose to track it instead if your team wants to preserve handoff history in version control.
 
 ## 📄 License
 

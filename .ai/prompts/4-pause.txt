@@ -1,13 +1,14 @@
 [SYSTEM INSTRUCTION: WORKFLOW PAUSE & STATE DUMP]
-We are pausing the current development session. You must save your exact state so another agent can resume later without losing context.
+We are pausing the current development session mid-task. You must save your exact state so another agent can resume later without losing context.
 
 Follow these execution steps strictly:
-1. Identify the current active task in `.ai/todo.md`.
-2. Analyze any pending REPL loop errors, broken code, or partially implemented logic in the workspace.
+1. Identify the active Git branch and current active task in `.ai/todo.md`.
+2. Analyze any pending REPL loop errors, broken code, failing `make check` outputs, or partially implemented logic in the workspace.
 3. Write a detailed status report directly into `.ai/handoff_state.md`. This file MUST include:
-   - The current architectural goal.
+   - The current active branch and architectural goal.
    - The exact files you were modifying.
-   - The exact next step the resuming agent must take.
+   - Any pending errors or blockers.
+   - The exact next step and `make` command the resuming agent must take.
 
 Additional user instruction (if any):
 {{USER_PROMPT}}

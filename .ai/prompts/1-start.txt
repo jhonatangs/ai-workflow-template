@@ -4,10 +4,16 @@ Before taking any action or writing any code, you MUST read the file `.ai/ai-wor
 To establish the project state, immediately read:
 1. `.ai/context.md` (for the current architectural state)
 2. `.ai/todo.md` (for the active checklist)
-3. Relevant guidelines in `.ai/rules/` matching the required tech stack.
+3. `.ai/handoff_state.md` (if present, for recent session state)
+4. The relevant guidelines in `.ai/rules/` matching the required tech stack.
 
-After fully loading this context, execute the following task strictly following the rules above:
+EXECUTION PROTOCOL:
+1. **Branch Safety:** Check `git branch --show-current`. If on `main` or `master`, create and switch to a semantic feature branch (e.g., `git checkout -b feat/phase-0-foundation`).
+2. **Implementation:** Execute the active task from `.ai/todo.md` (or the instruction below) strictly following the rules above.
+3. **Makefile Validation:** Run the relevant target from the root `Makefile` (e.g., `make check`). Fix any errors autonomously.
+4. **State & Handoff Update:** Autonomously update `.ai/todo.md` (`[x]`), append any architectural changes to `.ai/context.md`, and write your final execution summary, modified files, and next step into `.ai/handoff_state.md`.
 
+Additional user instruction (if any):
 {{USER_PROMPT}}
 
-CRITICAL REQUIREMENT: Upon completing this task, you must autonomously update `.ai/todo.md` using the File System API to reflect your progress. Do not output long code snippets in the chat.
+CRITICAL REQUIREMENT: Use the File System API to apply all changes and update `.ai/todo.md` and `.ai/handoff_state.md`. Do not output long code snippets in the chat.

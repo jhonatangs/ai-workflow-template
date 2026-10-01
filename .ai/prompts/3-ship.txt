@@ -1,13 +1,14 @@
-[SYSTEM INSTRUCTION: SHIP & COMMIT PREPARATION]
-You are preparing the current workspace for a commit or Pull Request. Read `.ai/rules/01-global.md` to review our Conventional Commits standard.
+[SYSTEM INSTRUCTION: SHIP, VALIDATE & PULL REQUEST PREPARATION]
+You are preparing the current workspace for a commit and Pull Request. Read git rule in `.ai/rules/` to review our branching and Conventional Commits standard.
 
 Follow these execution steps strictly:
-1. Review all unstaged and staged changes in the repository to understand what was modified.
-2. Run formatting, type-checking, or linting tools if available in the current project stack.
-3. Formulate a precise Conventional Commit message summarizing the changes.
-4. Update `.ai/todo.md` to mark the related task(s) as complete, if not already done.
+1. **Branch Safety Check:** Check `git branch --show-current`. NEVER commit or push directly to `main` or `master`. If on `main`, create and switch to a semantic branch (`git checkout -b feat/<scope>`).
+2. **Automated Quality Gate:** Run `make check` in the terminal (`ruff`, `mypy`, `pytest`, `terraform validate`, `sqlfluff`). Fix any errors autonomously before proceeding.
+3. **State Synchronization:** Ensure `.ai/todo.md` has the completed task(s) marked with `[x]` and `.ai/context.md` is up to date.
+4. **Commit, Push & PR:** Stage modified files (excluding `.ai/handoff_state.md`, which is gitignored), formulate a precise Conventional Commit message, push the branch (`git push -u origin HEAD`), and open/update a Pull Request via `gh pr create --fill`.
+5. **Handoff Update:** Update `.ai/handoff_state.md` recording the commit hash, branch pushed, PR status, and the next pending task in `.ai/todo.md`.
 
 Additional user instruction (if any):
 {{USER_PROMPT}}
 
-CRITICAL REQUIREMENT: Do not make structural architectural changes during this phase. Focus solely on code quality, review, and commit preparation.
+CRITICAL REQUIREMENT: Do not make structural architectural changes during this phase. Focus solely on code quality, review, PR creation, and updating `.ai/handoff_state.md`.
